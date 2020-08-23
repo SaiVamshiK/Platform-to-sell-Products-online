@@ -8,6 +8,7 @@ from .forms import UserRegistrationForm
 from django.contrib import messages
 from .filters import ProductFilter
 from django.core.paginator import Paginator,EmptyPage,PageNotAnInteger
+from django.contrib.auth.decorators import login_required
 
 def store(request):
 
@@ -22,7 +23,7 @@ def store(request):
     myFilter = ProductFilter(request.GET,queryset=products)
     products = myFilter.qs
 
-    paginator = Paginator(products, 1)
+    paginator = Paginator(products, 3)
     page = request.GET.get('page')
     try:
         products = paginator.page(page)
@@ -126,8 +127,28 @@ def register(request):
         form = UserRegistrationForm()
     return render(request,'store/register.html',{'form':form})
 
+@login_required(login_url='login')
+def previousOrders(request):
+    cur_user=request.user
+    cur_cust=Customer.objects.filter(user=cur_user).first()
+    cur_cust_orders=Order.objects.filter(customer=cur_cust)
 
+    all_order_details=[]
 
+    for order in cur_cust_orders:
+        all_order_items=OrderItem.objects.filter(order=order)
+        all_product_details=[]
+        for orderItem in all_order_items:
+            temp={'product_name':orderItem.product.name,
+                  'product_price':orderItem.product.price,
+                  'product_quantity':orderItem.quantity}
+            all_product_details.append(temp)
+        qwe={'order':order,'details':all_product_details}
+        all_order_details.append(qwe)
 
+    context={
+        'all_order_details':all_order_details,
+    }
+    return render(request,'store/my_orders.html',context)
 
 

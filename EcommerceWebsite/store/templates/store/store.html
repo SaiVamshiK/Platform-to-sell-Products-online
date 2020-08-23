@@ -39,37 +39,37 @@
 
     </div>
     <div class="col-md-4">
-        <ul class="pagination">
-            {% if products.has_previous %}
-                <li class="page-item ">
-                        <a class="page-link" href="?page={{products.previous_page_number}}">
-                            &laquo;
-                        </a>
-                </li>
-            {% endif %}
-            {% for p in products.paginator.page_range %}
-                {% if product.number == p %}
-                    <li class="page-item active">
-                        <a class="page-link" href="?page={{p}}">
-                            {{p}}
-                        </a>
-                    </li>
-                {% else %}
-                    <li class="page-item">
-                        <a class="page-link" href="?page={{p}}">
-                            {{p}}
-                        </a>
+            <ul class="pagination">
+                {% if products.has_previous %}
+                    <li class="page-item ">
+                            <a class="page-link" href="?page={{products.previous_page_number}}">
+                                &laquo;
+                            </a>
                     </li>
                 {% endif %}
-            {% endfor %}
-            {% if products.has_next %}
-                <li class="page-item ">
-                        <a class="page-link" href="?page={{products.next_page_number}}">
-                            &raquo;
-                        </a>
-                </li>
-            {% endif %}
-        </ul>
+                {% for p in products.paginator.page_range %}
+                    {% if product.number == p %}
+                        <li class="page-item active">
+                            <a class="page-link" href="?page={{p}}">
+                                {{p}}
+                            </a>
+                        </li>
+                    {% else %}
+                        <li class="page-item">
+                            <a class="page-link" href="?page={{p}}">
+                                {{p}}
+                            </a>
+                        </li>
+                    {% endif %}
+                {% endfor %}
+                {% if products.has_next %}
+                    <li class="page-item ">
+                            <a class="page-link" href="?page={{products.next_page_number}}">
+                                &raquo;
+                            </a>
+                    </li>
+                {% endif %}
+            </ul>
     </div>
     <div class="col-md-4">
 
@@ -77,5 +77,3 @@
 </div>
 
 {% endblock content %}
-
-

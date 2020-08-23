@@ -60,7 +60,6 @@ class Order(models.Model):
         total = sum([item.quantity for item in orderitems])
         return total
 
-
 class OrderItem(models.Model):
     product=models.ForeignKey(Product,on_delete=models.SET_NULL,null=True,blank=True)
     order=models.ForeignKey(Order,on_delete=models.SET_NULL,null=True)

@@ -1,0 +1,28 @@
+{% extends 'store/main.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% block content %}
+
+{% for o in all_order_details %}
+    <h1>Order:</h1>
+    <h3>Name: {{o.order.customer.name}}</h3>
+    <h3>Date Ordered: {{o.order.date_ordered}}</h3>
+    <h3>Status:
+        {% if o.order.complete %}
+            Transaction Successful
+        {% else %}
+            Transaction Denied
+        {% endif %}
+    </h3>
+    <h1>Products Ordered</h1>
+    {% for detail in o.details %}
+        <h4>Product name: {{detail.product_name}}</h4>
+        <h5>Product Price: {{detail.product_price}}</h5>
+    {% endfor %}
+    <br>
+{% endfor %}
+
+{% endblock content %}
+
+
+
