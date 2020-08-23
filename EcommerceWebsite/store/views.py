@@ -140,6 +140,7 @@ def previousOrders(request):
         all_product_details=[]
         for orderItem in all_order_items:
             temp={'product_name':orderItem.product.name,
+                  'product_image':orderItem.product.image,
                   'product_price':orderItem.product.price,
                   'product_quantity':orderItem.quantity}
             all_product_details.append(temp)
