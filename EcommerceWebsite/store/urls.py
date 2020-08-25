@@ -24,6 +24,7 @@ urlpatterns = [
         template_name='store/PassWordResetdone.html'
     ),name='password_reset_complete'),
     path('previous_orders/',views.previousOrders,name='previous_orders'),
+    path('pdf_view/',views.ViewPDF.as_view(),name='pdf_view'),
 ]
 
 

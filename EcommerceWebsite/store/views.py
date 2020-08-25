@@ -9,9 +9,15 @@ from django.contrib import messages
 from .filters import ProductFilter
 from django.core.paginator import Paginator,EmptyPage,PageNotAnInteger
 from django.contrib.auth.decorators import login_required
+from io import BytesIO
+from django.http import HttpResponse
+from django.template.loader import get_template
+from django.views import View
+from xhtml2pdf import pisa
+
+
 
 def store(request):
-
     data = cartData(request)
 
     cartItems = data['cartItems']
@@ -127,6 +133,8 @@ def register(request):
         form = UserRegistrationForm()
     return render(request,'store/register.html',{'form':form})
 
+data={}
+
 @login_required(login_url='login')
 def previousOrders(request):
     cur_user=request.user
@@ -147,9 +155,37 @@ def previousOrders(request):
         qwe={'order':order,'details':all_product_details}
         all_order_details.append(qwe)
 
+
+    data['all_order_details']=all_order_details
     context={
         'all_order_details':all_order_details,
     }
     return render(request,'store/my_orders.html',context)
+
+
+
+def render_to_pdf(template_src, context_dict={}):
+	template = get_template(template_src)
+	html  = template.render(context_dict)
+	result = BytesIO()
+	pdf = pisa.pisaDocument(BytesIO(html.encode("ISO-8859-1")), result)
+	if not pdf.err:
+		return HttpResponse(result.getvalue(), content_type='application/pdf')
+	return None
+
+class ViewPDF(View):
+	def get(self, request, *args, **kwargs):
+		pdf = render_to_pdf('store/pdf_template.html', data)
+		return HttpResponse(pdf, content_type='application/pdf')
+
+
+
+
+
+
+
+
+
+
 
 
