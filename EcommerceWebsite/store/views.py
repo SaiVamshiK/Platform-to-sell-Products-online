@@ -16,8 +16,9 @@ from django.views import View
 from xhtml2pdf import pisa
 
 
-
+temp={}
 def store(request):
+
     data = cartData(request)
 
     cartItems = data['cartItems']
@@ -47,7 +48,9 @@ def cart(request):
     cartItems = data['cartItems']
     order = data['order']
     items = data['items']
-
+    temp['items']=items
+    temp['order']=order
+    temp['cartItems']=cartItems
     context={'items':items,'order':order,'cartItems':cartItems}
     return render(request,'store/cart.html',context)
 
@@ -179,6 +182,11 @@ class ViewPDF(View):
 		return HttpResponse(pdf, content_type='application/pdf')
 
 
+
+class ViewCurPDF(View):
+	def get(self, request, *args, **kwargs):
+		pdf = render_to_pdf('store/cur_pdf_template.html', temp)
+		return HttpResponse(pdf, content_type='application/pdf')
 
 
 

@@ -25,6 +25,7 @@ urlpatterns = [
     ),name='password_reset_complete'),
     path('previous_orders/',views.previousOrders,name='previous_orders'),
     path('pdf_view/',views.ViewPDF.as_view(),name='pdf_view'),
+    path('cur_pdf_view/',views.ViewCurPDF.as_view(),name='cur_pdf_view'),
 ]
 
 
