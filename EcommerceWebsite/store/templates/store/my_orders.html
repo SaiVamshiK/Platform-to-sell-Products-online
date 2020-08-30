@@ -43,6 +43,9 @@
                     <div style="flex:1">
                         <strong>Price</strong>
                     </div>
+                    <div style="flex:1">
+                        <strong></strong>
+                    </div>
                 </div>
             </div>
             {% for detail in o.details %}
@@ -56,6 +59,9 @@
                         </div>
                         <div style="flex:1">
                             <strong>{{detail.product_price}}</strong>
+                        </div>
+                        <div style="flex:1">
+                            <a href="{% url 'each_product_review' detail.product_id %}" class="btn btn-info">Give a Review</a>
                         </div>
                     </div>
                 </div>

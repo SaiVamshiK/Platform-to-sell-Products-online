@@ -4,7 +4,7 @@ from django.http import JsonResponse
 import json
 import datetime
 from .utils import cookieCart,cartData,guestOrder
-from .forms import UserRegistrationForm
+from .forms import UserRegistrationForm,ReviewForm
 from django.contrib import messages
 from .filters import ProductFilter
 from django.core.paginator import Paginator,EmptyPage,PageNotAnInteger
@@ -15,9 +15,38 @@ from django.template.loader import get_template
 from django.views import View
 from xhtml2pdf import pisa
 
+def see_rating(request,pk):
+    cur_product=Product.objects.get(id=pk)
+    all_reviews=Review.objects.all()
+    i=1
+    r=0
+    for review in all_reviews:
+        if cur_product==review.product:
+            r=r+review.rating
+            i=i+1
+
+    r=r/i
+
+    return render(request,'store/see_rating.html',{'rating':r,'product':cur_product})
+
+def createReview(request,pk):
+    if request.method=='POST':
+        form=ReviewForm(request.POST)
+        cur_product=Product.objects.get(id=pk)
+        if form.is_valid():
+            Review.objects.create(
+                user=request.user,
+                product=cur_product,
+                rating=form.cleaned_data.get('rating'),
+            )
+            return redirect('store')
+    else:
+        form=ReviewForm()
+    return render(request,'store/review_create.html',{'form':form})
 
 temp={}
 def store(request):
+
 
     data = cartData(request)
 
@@ -153,6 +182,7 @@ def previousOrders(request):
             temp={'product_name':orderItem.product.name,
                   'product_image':orderItem.product.image,
                   'product_price':orderItem.product.price,
+                  'product_id':orderItem.product.id,
                   'product_quantity':orderItem.quantity}
             all_product_details.append(temp)
         qwe={'order':order,'details':all_product_details}
@@ -191,7 +221,10 @@ class ViewCurPDF(View):
 
 
 
-
+def eachProductReview(request,pk):
+    cur_product=Product.objects.get(id=pk)
+    form=ReviewForm()
+    return render(request,'store/each_product_review.html',{'product':cur_product,'form':form})
 
 
 

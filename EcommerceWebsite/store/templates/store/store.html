@@ -14,6 +14,7 @@
     <br>
 {% else %}
 {% endif %}
+
 <div class="row">
     <div class="col">
         <div class="card card-body">
@@ -30,13 +31,16 @@
         <div class="col-lg-4">
             <img class="thumbnail" src="{{product.imageURL}}">
             <div class="box-element product">
-                <h6><strong>{{product.name}}</strong></h6>
+                <h6><pre><strong>{{product.name}}</strong></pre></h6>
                 <hr>
                 <button data-product="{{product.id}}" data-action="add" class="btn btn-outline-secondary add-btn update-cart">Add to Cart</button>
                 <a href="#" class="btn btn-outline-success">
                     View
                 </a>
                 <h4 style="display: inline-block;float:right">${{product.price|floatformat:2}}</h4>
+            </div>
+            <div class="box-element product">
+                <a href="{% url 'see_rating' product.pk %}">See Rating</a>
             </div>
         </div>
     {% endfor %}

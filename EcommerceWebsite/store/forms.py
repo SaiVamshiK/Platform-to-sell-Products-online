@@ -9,4 +9,14 @@ class UserRegistrationForm(UserCreationForm):
         fields=['username','email','password1','password2']
 
 
+class ReviewForm(forms.Form):
+    review=forms.CharField()
+    rating=forms.FloatField()
+    class Meta:
+        fields = ['review','rating']
+
+
+
+
+
 

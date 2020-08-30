@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
-# Create your models here.
+
+
 
 class Customer(models.Model):
     user=models.OneToOneField(User,on_delete=models.CASCADE,null=True,blank=True)
@@ -19,7 +20,7 @@ class Product(models.Model):
     digital=models.BooleanField(default=False,null=True,blank=True)
     image=models.ImageField(null=True,blank=True)
     shippable=models.CharField(max_length=200,null=True,blank=True,choices=CATEGORY)
-
+    rating=models.FloatField(null=True,blank=True)
 
     @property
     def imageURL(self):
@@ -28,6 +29,11 @@ class Product(models.Model):
         except:
             url=''
         return url
+
+class Review(models.Model):
+    user=models.ForeignKey(User,on_delete=models.CASCADE,null=True,blank=True)
+    product=models.ForeignKey(Product,on_delete=models.CASCADE,blank=True,null=True)
+    rating=models.FloatField(null=True,blank=True)
 
 
 class Order(models.Model):
@@ -80,7 +86,6 @@ class ShippingAddress(models.Model):
     state=models.CharField(max_length=200,null=True)
     zipcode=models.CharField(max_length=200,null=True)
     date_added=models.DateTimeField(auto_now_add=True)
-
 
 
 
