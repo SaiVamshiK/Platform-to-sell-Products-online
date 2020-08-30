@@ -4,20 +4,17 @@
 {% block content %}
 
 <div class="content-section">
-    <form method="post">
+    <form action="{% url 'result' product_id %}">
         {% csrf_token %}
-        <fieldset class="form-group">
-            <legend class="border-bottom mb-4">
-                Post a review
-            </legend>
-            {{form|crispy}}
-        </fieldset>
-        <div class="form-group">
-            <button class="btn btn-outline-info" type="submit">
-                Post!
-            </button>
-        </div>
+        Enter sentence: <input type="text" required name="sound">
+        <br>
+        <br>
+        <input type="submit" name="" value="submit">
     </form>
+
 </div>
 
 {% endblock content %}
+
+
+

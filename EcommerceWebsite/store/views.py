@@ -14,6 +14,29 @@ from django.http import HttpResponse
 from django.template.loader import get_template
 from django.views import View
 from xhtml2pdf import pisa
+from django.shortcuts import render
+from .apps import StoreConfig
+from django.http import JsonResponse
+from rest_framework.views import APIView
+
+
+class call_model(APIView):
+    def get(self, request,pk):
+        if request.method == 'GET':
+            cur_product=Product.objects.get(id=pk)
+            sound = request.GET.get('sound')
+            lis=[]
+            lis.append(sound)
+            prediction = StoreConfig.classifier.predict(lis)
+            r=int(prediction[0])
+            Review.objects.create(
+                user=request.user,
+                product=cur_product,
+                rating=r,
+            )
+            print('Prediction:',prediction)
+            return redirect('store')
+
 
 def see_rating(request,pk):
     cur_product=Product.objects.get(id=pk)
@@ -42,7 +65,8 @@ def createReview(request,pk):
             return redirect('store')
     else:
         form=ReviewForm()
-    return render(request,'store/review_create.html',{'form':form})
+    cur_product=Product.objects.get(id=pk)
+    return render(request,'store/review_create.html',{'form':form,'product_id':cur_product.pk})
 
 temp={}
 def store(request):

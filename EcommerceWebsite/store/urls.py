@@ -27,7 +27,8 @@ urlpatterns = [
     path('pdf_view/',views.ViewPDF.as_view(),name='pdf_view'),
     path('cur_pdf_view/',views.ViewCurPDF.as_view(),name='cur_pdf_view'),
     path('product/<int:pk>/review/',views.createReview,name='each_product_review'),
-    path('product/<int:pk>/see_rating/',views.see_rating,name='see_rating')
+    path('product/<int:pk>/see_rating/',views.see_rating,name='see_rating'),
+    path('product/<int:pk>/review/classify/',views.call_model.as_view(),name='result')
 ]
 
 

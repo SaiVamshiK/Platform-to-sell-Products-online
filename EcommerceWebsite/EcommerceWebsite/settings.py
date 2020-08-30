@@ -37,7 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'store.apps.StoreConfig',
+    'store',
     'crispy_forms',
     'django_filters',
 ]
@@ -72,6 +72,7 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'EcommerceWebsite.wsgi.application'
 
+MODELS = os.path.join(BASE_DIR, 'store/models')
 
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
@@ -139,3 +140,5 @@ EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_HOST_USER = 'your email here'
 EMAIL_HOST_PASSWORD = 'your password here'
+
+
