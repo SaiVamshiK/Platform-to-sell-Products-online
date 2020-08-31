@@ -34,6 +34,7 @@ class Review(models.Model):
     user=models.ForeignKey(User,on_delete=models.CASCADE,null=True,blank=True)
     product=models.ForeignKey(Product,on_delete=models.CASCADE,blank=True,null=True)
     rating=models.FloatField(null=True,blank=True)
+    review=models.CharField(max_length=10000,null=True,blank=True)
 
 
 class Order(models.Model):

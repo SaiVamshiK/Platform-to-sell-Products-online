@@ -35,6 +35,7 @@ class call_model(APIView):
                 user=request.user,
                 product=cur_product,
                 rating=r,
+                review=sound,
             )
             print('Prediction:',prediction)
             return redirect('store')
@@ -45,14 +46,16 @@ def see_rating(request,pk):
     all_reviews=Review.objects.all()
     i=1
     r=0
+    lis=[]
     for review in all_reviews:
         if cur_product==review.product:
+            lis.append(review.review)
             r=r+review.rating
             i=i+1
 
     r=r/i
 
-    return render(request,'store/see_rating.html',{'rating':r,'product':cur_product})
+    return render(request,'store/see_rating.html',{'rating':r,'product':cur_product,'reviews':lis})
 
 def createReview(request,pk):
     if request.method=='POST':
