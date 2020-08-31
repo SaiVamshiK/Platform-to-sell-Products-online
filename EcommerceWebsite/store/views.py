@@ -1,6 +1,5 @@
 from django.shortcuts import render,redirect
 from .models import *
-from django.http import JsonResponse
 import json
 import datetime
 from .utils import cookieCart,cartData,guestOrder
@@ -29,6 +28,9 @@ class call_model(APIView):
             lis.append(sound)
             prediction = StoreConfig.classifier.predict(lis)
             r=int(prediction[0])
+            rate=request.GET.get('rating_given')
+            r=(r+float(rate))
+            r=r/2
             Review.objects.create(
                 user=request.user,
                 product=cur_product,
