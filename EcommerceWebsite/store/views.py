@@ -4,7 +4,7 @@ from django.http import JsonResponse
 import json
 import datetime
 from .utils import cookieCart,cartData,guestOrder
-from .forms import UserRegistrationForm,ReviewForm
+from .forms import UserRegistrationForm,ReviewForm,CustomReviewForm
 from django.contrib import messages
 from .filters import ProductFilter
 from django.core.paginator import Paginator,EmptyPage,PageNotAnInteger
@@ -54,7 +54,7 @@ def see_rating(request,pk):
 
 def createReview(request,pk):
     if request.method=='POST':
-        form=ReviewForm(request.POST)
+        form=CustomReviewForm(request.POST)
         cur_product=Product.objects.get(id=pk)
         if form.is_valid():
             Review.objects.create(
@@ -66,7 +66,7 @@ def createReview(request,pk):
     else:
         form=ReviewForm()
     cur_product=Product.objects.get(id=pk)
-    return render(request,'store/review_create.html',{'form':form,'product_id':cur_product.pk})
+    return render(request,'store/review_create.html',{'form':form,'product_id':cur_product.pk,'product':cur_product})
 
 temp={}
 def store(request):

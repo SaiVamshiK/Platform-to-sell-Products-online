@@ -16,6 +16,13 @@ class ReviewForm(forms.Form):
         fields = ['review','rating']
 
 
+class CustomReviewForm(forms.Form):
+    sound=forms.CharField()
+    rating=forms.FloatField()
+    class Meta:
+        fields=['sound','rating']
+
+
 
 
 

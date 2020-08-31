@@ -6,10 +6,33 @@
 <div class="content-section">
     <form action="{% url 'result' product_id %}">
         {% csrf_token %}
-        Enter sentence: <input type="text" required name="sound">
-        <br>
-        <br>
-        <input type="submit" name="" value="submit">
+        <fieldset class="form-group">
+            <legend class="border-bottom mb-4">
+                Place a review for...
+            </legend>
+        </fieldset>
+
+        <div class="col-md-12" style="float:right">
+            <div class="col-lg-4">
+
+            </div>
+            <div class="col-lg-4">
+                <img class="thumbnail" src="{{product.imageURL}}">
+                <div class="box-element product">
+                    <h6><strong>{{product.name}}</strong></h6>
+                    <hr>
+                </div>
+                <br>
+                <br>
+                <input type="text" required name="sound" class="form-control">
+                <br>
+                <br>
+                <input type="submit" name="" value="Post Review" class="btn btn-success">
+            </div>
+            <div class="col-lg-4">
+
+            </div>
+        </div>
     </form>
 
 </div>
